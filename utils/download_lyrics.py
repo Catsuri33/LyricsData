@@ -29,7 +29,7 @@ def download_lyrics(artist: str, track: str|None = None, album: str|None = None)
     for object in json_data:
         extract_title = object["name"]
         extract_album = object["albumName"]
-        extract_lyrics_plain = object["plainLyrics"]
+        extract_lyrics_plain = object["plainLyrics"] or ""
         extract_artist = object["artistName"]
 
         folder_path = os.path.join(SAVE_FOLDER, extract_artist, extract_album)
