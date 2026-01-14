@@ -1,6 +1,7 @@
 import argparse
 import sys
 from pathlib import Path
+import os
 import shutil
 from colorama import Fore, Style, init as colorama_init
 
@@ -47,6 +48,9 @@ def clean_directory(path_str: str) -> None:
 def main() -> None:
     parser = build_parser()
     args = parser.parse_args()
+
+    os.makedirs(SAVE_FOLDER, exist_ok=True)
+    os.makedirs("./results", exist_ok=True)
 
     if args.clear:
         clean_directory(SAVE_FOLDER)
