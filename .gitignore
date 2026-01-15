@@ -11,5 +11,8 @@ wheels/
 
 # Custom
 musics/*
+!musics/.keep
 results/*
+!results/.keep
 graphics/*
+!graphics/.keep
