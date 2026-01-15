@@ -5,9 +5,10 @@ import os
 import shutil
 from colorama import Fore, Style, init as colorama_init
 
-from config import SAVE_FOLDER
+from config import SAVE_FOLDER, RESULT_FOLDER, GRAPHICS_FOLDER
 from utils.menus import download_menu
 from utils.stats_lyrics import count_occurrences, dump_results
+from utils.graphics import generate_graphics
 
 colorama_init(autoreset=True)
 
@@ -50,11 +51,12 @@ def main() -> None:
     args = parser.parse_args()
 
     os.makedirs(SAVE_FOLDER, exist_ok=True)
-    os.makedirs("./results", exist_ok=True)
+    os.makedirs(RESULT_FOLDER, exist_ok=True)
 
     if args.clear:
         clean_directory(SAVE_FOLDER)
-        clean_directory("./results")
+        clean_directory(RESULT_FOLDER)
+        clean_directory(GRAPHICS_FOLDER)
 
     if args.download:
         end = False
@@ -65,8 +67,11 @@ def main() -> None:
         sys.exit(0)
 
     global_cnt, artist_cnts, album_cnts = count_occurrences(Path(SAVE_FOLDER).resolve())
-    dump_results(Path("./results").resolve(), global_cnt, artist_cnts, album_cnts)
+    dump_results(Path(RESULT_FOLDER).resolve(), global_cnt, artist_cnts, album_cnts)
     print(f"{Fore.GREEN}\n✅  Statistiques d'occurrences générées")
+
+    generate_graphics(Path("./results").resolve(), 40)
+    print(f"{Fore.GREEN}\n✅  Graphiques générés")
 
 if __name__ == "__main__":
     main()
